@@ -1,5 +1,4 @@
 import React from 'react';
-import { makeStyles } from '@material-ui/core/styles';
 import Table from '@material-ui/core/Table';
 import TableBody from '@material-ui/core/TableBody';
 import TableCell from '@material-ui/core/TableCell';
@@ -8,8 +7,10 @@ import TableHead from '@material-ui/core/TableHead';
 import TableRow from '@material-ui/core/TableRow';
 import Paper from '@material-ui/core/Paper';
 import AddIcon from '@material-ui/icons/Add';
+import Time from './Time.js';
 
 const SearchResults = ({ data, selectSong }) => {
+
   return (
     <div>
       <TableContainer component={Paper}>
@@ -33,9 +34,14 @@ const SearchResults = ({ data, selectSong }) => {
               <TableCell align="right">{row.name}</TableCell>
               <TableCell align="right">{row.album.name}</TableCell>
               <TableCell align="right">{row.album.artists[0].name}</TableCell>
-              <TableCell align="right">{row.duration_ms}</TableCell>
+              <TableCell align="right"><Time ms={row.duration_ms} /></TableCell>
               <TableCell align="right"><AddIcon onClick={() => {
-                selectSong(row.id);
+                selectSong(row.id, {
+                  name: row.name,
+                  album: row.album.name,
+                  artist: row.album.artists[0].name,
+                  img: row.album.images[1]
+                });
               }}/></TableCell>
             </TableRow>
           ))}
