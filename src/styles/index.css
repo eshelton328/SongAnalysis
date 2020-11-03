@@ -5,7 +5,7 @@ body {
     sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
-  background-color: azure;
+  background-color: #FCFCFC
 }
 
 code {
@@ -14,5 +14,10 @@ code {
 }
 
 .search-bar {
+  padding-bottom: 50px;
+}
+
+.chart {
+  padding-top: 30px;
   padding-bottom: 50px;
 }

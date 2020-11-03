@@ -1,11 +1,11 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
-import Box from '@material-ui/core/Box';
 import Container from '@material-ui/core/Container';
 import Grid from '@material-ui/core/Grid';
 import Credentials from '../Credentials.js';
 import SearchBar from './SearchBar.js';
 import SearchResults from './SearchResults.js'
+import SongData from './SongData.js'
 import '../styles/App.css';
 
 function App() {
@@ -14,6 +14,7 @@ function App() {
   const [token, setToken] = useState('');
   const [results, setResults] = useState([]);
   const [song, setSong] = useState('');
+  const [songFeats, setFeats] = useState({});
 
   const getToken = () => {
     axios('https://accounts.spotify.com/api/token', {
@@ -54,8 +55,8 @@ function App() {
     })
   };
 
-  const selectSong = (id) => {
-    setSong(id);
+  const selectSong = (id, songObj) => {
+    setSong(songObj);
     setResults([]);
 
     axios(`https://api.spotify.com/v1/audio-features/${id}`, {
@@ -66,6 +67,7 @@ function App() {
     })
     .then(songResponse => {
       const data = songResponse.data;
+      setFeats(data);
     })
   }
 
@@ -77,7 +79,7 @@ function App() {
   if (results.length > 0) {
     searchResults = <SearchResults data={results} selectSong={selectSong} />;
   } else if (song !== '') {
-    searchResults = <h3>Getting Song Data!</h3>
+    searchResults = <SongData details={song} features={songFeats}/>
   }
 
   return (
@@ -90,6 +92,7 @@ function App() {
         >
           <Grid
             container
+            item
             direction="row"
             justify="center"
           >
@@ -102,8 +105,11 @@ function App() {
             <SearchBar token={token} searchSpotify={searchSpotify}/>
           </Grid>
           <Grid
-            item
-            xs={9}
+          container
+          item
+          direction="row"
+          justify="center"
+          xs={12}
           >
             {searchResults}
           </Grid>
