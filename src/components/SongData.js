@@ -13,8 +13,16 @@ import PlayArrowIcon from '@material-ui/icons/PlayArrow';
 import SkipNextIcon from '@material-ui/icons/SkipNext'
 import AddIcon from '@material-ui/icons/Add';
 import Time from './Time.js';
+import timeConverter from '../timeConverter.js';
+import axios from 'axios';
 
-const SongData = ({ details, features }) => {
+const SongData = ({ details, features, addToDB }) => {
+  const time = timeConverter(features.duration_ms);
+
+  console.log(details);
+
+  let obj = details;
+  obj.length = JSON.stringify(features.duration_ms);
 
   const useStyles = makeStyles((theme) => ({
     root: {
@@ -125,7 +133,7 @@ const SongData = ({ details, features }) => {
                   Album: {details.album}
                 </Typography>
                 <Typography variant="subtitle2" color="textSecondary">
-                  Length: <Time ms={features.duration_ms} />
+                  Length: {time}
                 </Typography>
                 <Typography variant="subtitle2" color="textSecondary">
                   Time Signature: {features.time_signature}
@@ -141,7 +149,9 @@ const SongData = ({ details, features }) => {
                 </Typography>
               </CardContent>
               <div className={classes.controls}>
-                <IconButton aria-label="play/pause">
+                <IconButton aria-label="play/pause" onClick={() => {
+                  addToDB(obj);
+                }}>
                   <AddIcon /> Add Song
                 </IconButton>
               </div>
