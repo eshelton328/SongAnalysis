@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import Grid from '@material-ui/core/Grid';
 import { TextField, Button } from '@material-ui/core'
 
-const SearchBar = ({ token, searchSpotify }) => {
+const SearchBar = ({ token, searchSpotify, toggle }) => {
 
   const [search, setSearch] = useState('');
 
@@ -41,9 +41,25 @@ const SearchBar = ({ token, searchSpotify }) => {
             onClick={() => {
               searchSpotify(search);
               setSearch('')
+              toggle(0);
             }}
           >
             Search
+          </Button>
+        </Grid>
+        <Grid
+          container
+          direction="column"
+        >
+          <Button
+          classes={{ label: 'submit-btn' }}
+            variant="contained"
+            size="small"
+            onClick={() => {
+              toggle(1);
+            }}
+          >
+            My Songs
           </Button>
         </Grid>
       </Grid>
