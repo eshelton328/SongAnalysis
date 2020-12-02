@@ -5,4 +5,5 @@
 * React
 * MaterialUI
 * Express
+* MySQL
 ## Installation
